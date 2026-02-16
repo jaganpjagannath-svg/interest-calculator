@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D Interest Calculator</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+}
+
+.card {
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(15px);
+  padding: 30px;
+  border-radius: 25px;
+  width: 350px;
+  text-align: center;
+  color: white;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
+input {
+  width: 90%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 15px;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  box-shadow: inset 3px 3px 6px rgba(0,0,0,0.4),
+              inset -3px -3px 6px rgba(255,255,255,0.2);
+}
+
+button {
+  padding: 12px 25px;
+  margin-top: 15px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  background: #00f5d4;
+  color: black;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+button:hover {
+  transform: scale(1.1);
+  background: #00bbf9;
+}
+
+.result {
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.toggle {
+  margin-top: 15px;
+  cursor: pointer;
+  font-size: 14px;
+  text-decoration: underline;
+}
+
+@media (max-width: 400px) {
+  .card {
+    width: 90%;
+    padding: 20px;
+  }
+  input {
+    font-size: 14px;
+    padding: 10px;
+  }
+  button {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <h2 id="title">3D Interest Calculator</h2>
+
+  <input type="number" id="principal" placeholder="Principal Amount">
+  <input type="number" id="rate" placeholder="Rate of Interest (%)">
+  <input type="number" id="years" placeholder="Years">
+  <input type="number" id="months" placeholder="Months">
+  <input type="number" id="days" placeholder="Days">
+
+  <button onclick="calculate()" id="calcBtn">Calculate</button>
+
+  <div class="result" id="result"></div>
+
+  <div class="toggle" onclick="toggleLanguage()" id="langToggle">
+    Switch to Telugu
+  </div>
+</div>
+
+<script>
+let isEnglish = true;
+
+function calculate() {
+  let p = parseFloat(document.getElementById("principal").value) || 0;
+  let r = parseFloat(document.getElementById("rate").value) || 0;
+  let y = parseFloat(document.getElementById("years").value) || 0;
+  let m = parseFloat(document.getElementById("months").value) || 0;
+  let d = parseFloat(document.getElementById("days").value) || 0;
+
+  // Convert everything to years as decimal
+  let t = y + m/12 + d/365;
+
+  let interest = (p * r * t) / 100;
+  let total = p + interest;
+
+  if(isEnglish){
+    document.getElementById("result").innerHTML =
+      "Interest: ₹ " + interest.toFixed(2) + "<br>Total: ₹ " + total.toFixed(2) +
+      "<br>Time: " + y + " Years, " + m + " Months, " + d + " Days";
+  } else {
+    document.getElementById("result").innerHTML =
+      "వడ్డీ: ₹ " + interest.toFixed(2) + "<br>మొత్తం: ₹ " + total.toFixed(2) +
+      "<br>కాలం: " + y + " సంవత్సరాలు, " + m + " నెలలు, " + d + " రోజులు";
+  }
+}
+
+function toggleLanguage() {
+  isEnglish = !isEnglish;
+
+  if(isEnglish){
+    document.getElementById("title").innerText = "3D Interest Calculator";
+    document.getElementById("principal").placeholder = "Principal Amount";
+    document.getElementById("rate").placeholder = "Rate of Interest (%)";
+    document.getElementById("years").placeholder = "Years";
+    document.getElementById("months").placeholder = "Months";
+    document.getElementById("days").placeholder = "Days";
+    document.getElementById("calcBtn").innerText = "Calculate";
+    document.getElementById("langToggle").innerText = "Switch to Telugu";
+  } else {
+    document.getElementById("title").innerText = "3D వడ్డీ లెక్కింపు";
+    document.getElementById("principal").placeholder = "మూలధనం";
+    document.getElementById("rate").placeholder = "వడ్డీ శాతం (%)";
+    document.getElementById("years").placeholder = "సంవత్సరాలు";
+    document.getElementById("months").placeholder = "నెలలు";
+    document.getElementById("days").placeholder = "రోజులు";
+    document.getElementById("calcBtn").innerText = "లెక్కించు";
+    document.getElementById("langToggle").innerText = "English కి మార్చు";
+  }
+}
+</script>
+
+</body>
+</html>
